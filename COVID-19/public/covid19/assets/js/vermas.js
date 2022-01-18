@@ -3,100 +3,81 @@ import { getInfoTabla, getInfoPais } from './InfoRetrival.js';
 import nuevaChart from './Tabla/Tabla.js';
 import { crearDataset, paisesMod, selecc10 } from "./Tabla/InputsTablas.js";
 
-let botonVerMas = async (estadisticas, indexGlobal) => {
+let SeccionVerMas = async (estadisticas, indexGlobal) => {  //SE QUEDO LLAMANDO ASI PERO SE LE PUEDE CAMBIAR PARA CLARIDAD
 
     let vermastest = document.getElementById("vermasrequest").innerHTML
 
-        if (vermastest === "") {
-
-            
-            let datosmod = await paisesMod(estadisticas, indexGlobal);
-
-            let crearListaIzquierda = (datosmod, indexGlobal) => {
-
-                let muchotexto = "";
-
-                for (let i = 0; i < 10; i++) {
-
-                    if (i === 0) {
-
-                        muchotexto += `<a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" 
-                 href="#list${i + indexGlobal}" role="tab" aria-controls="home">${datosmod.seleccionPais[i]}</a>`;
+    if (vermastest === "") {
 
 
-                    } else {
+        let datosmod = await paisesMod(estadisticas, indexGlobal);  // en este tienes que asegurarte que "estadisticas" sea un llamado a la api /Countrys/asdasd
+        console.log("datos para lista de paises:")  //borrar esto luego de terminado el trabajo
+        console.log(datosmod)                       //probablemente tendrás ue cambiar la dirección de los datos, como --> datosmod.seleccionPais[i]  qe esta mas abajo
 
-                        muchotexto += `<a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" 
-                 href="#list${i + indexGlobal}" role="tab" aria-controls="home">${datosmod.seleccionPais[i]}</a>`;
+        let crearListaIzquierda = (datosmod, indexGlobal) => {
 
+            let muchotexto = "";
 
-                    };
+            for (let i = 0; i < 10; i++) {
 
-                };
+                 muchotexto += `
+                    
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${datosmod.seleccionPais[i]}
+                    <span><button type="button" class="btn btn-link border-0" data-toggle="modal" data-target="#Modal${datosmod.seleccionPais[i]}">
+                     Ver Más
+                    </button></span>
+                    </li>
+                   
 
-                return muchotexto
+                    <!-- Modal del pais -->
+
+                    <div class="modal fade" id="Modal${datosmod.seleccionPais[i]}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                             <div class="modal-content">
+                                 <div class="modal-header">
+                                     <h5 class="modal-title" id="idEjModal${datosmod.seleccionPais[i]}">Modificar a gusto</h5>
+                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
+                                     </button>
+                                 </div>
+                                 <div class="modal-body">
+                                     <h6> Info del pais Modal${datosmod.seleccionPais[i]}</h6>
+                                     <p>Casos activos: ${datosmod.seleccionActivos[i]}</p>
+                                     <p>Casos activos: ${datosmod.seleccionConfirmados[i]}</p>
+                                     <p>Casos activos: ${datosmod.seleccionMuertos[i]}</p>
+                                     <p>Casos activos: ${datosmod.seleccionRecuperados[i]}</p>
+                                     
+                                    <span> Grafikoko</span>
+                                 </div>
+                                 <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                    
+                 
+                 `;
+
             };
 
-            let crearListaDerecha = (datosmod, indexGlobal) => {
+            return muchotexto
+        };
 
-                let muchotexto = "";
+        let modvermas = document.getElementById("vermasrequest");
 
-                for (let i = 0; i < 10; i++) {
+        modvermas.innerHTML = "";
 
-                    if (i === 0) {
+        modvermas.innerHTML +=  `${crearListaIzquierda(datosmod, indexGlobal)} `
+        
+        
 
-                        muchotexto += `
-                    <div class="tab-pane fade show active" id="list${i + indexGlobal}" role="tabpanel" aria-labelledby="list-${i + indexGlobal}-list">
-                    <h6>${datosmod.seleccionPais[i]}</h6>
-                    <p>Casos activos: ${datosmod.seleccionActivos[i]}</p>
-                    <p>Casos activos: ${datosmod.seleccionConfirmados[i]}</p>
-                    <p>Casos activos: ${datosmod.seleccionMuertos[i]}</p>
-                    <p>Casos activos: ${datosmod.seleccionRecuperados[i]}</p>
-                     </div> `;
+    } else {
 
-                    } else {
+        document.getElementById("vermasrequest").innerHTML = ""
 
-                        muchotexto += `
-                <div class="tab-pane fade" id="list${i + indexGlobal}" role="tabpanel" aria-labelledby="list-${i + indexGlobal}-list">
-                <h6>${datosmod.seleccionPais[i]}</h6>
-                <p>Casos activos: ${datosmod.seleccionActivos[i]}</p>
-                <p>Casos activos: ${datosmod.seleccionConfirmados[i]}</p>
-                <p>Casos activos: ${datosmod.seleccionMuertos[i]}</p>
-                <p>Casos activos: ${datosmod.seleccionRecuperados[i]}</p>
-                 </div> `;
-
-                    };
-
-                };
-
-                return muchotexto
-            };
-
-            let modvermas = document.getElementById("vermasrequest");
-
-            modvermas.innerHTML = "";
-
-            modvermas.innerHTML += `<div class="row">
-                 <div class="col-4">
-                 <div class="list-group" id="list-tab" role="tablist">
-                 ${crearListaIzquierda(datosmod, indexGlobal)}  
-                 </div>
-                 </div>
-                 <div class="col-8">
-                 <div class="tab-content" id="nav-tabContent">
-                  ${crearListaDerecha(datosmod, indexGlobal)} 
-                  </div>
-                 </div>
-                </div>
-                `;
-
-
-
-        } else {
-
-            document.getElementById("vermasrequest").innerHTML = ""
-
-        }
+    }
 };
 
-export default botonVerMas;
+export default SeccionVerMas;

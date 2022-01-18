@@ -23,8 +23,7 @@
   <!-- chartjs -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- hay problemas con esta cagá -->
-  <link rel="stylesheet" type="text/css" th:href="assets/css/style.css">  
+  <link rel="stylesheet" href="./assets/CSS/style.css">
 
   <script type="module" src="assets/js/scripts.js"></script>
 
@@ -36,8 +35,6 @@
     <a class="navbar-brand text-light">Covid19</a>
     <form class="form-inline">
       <a class="mr-4" href="">Home</a>
-      <button id="js-iniciar-wrapper" class="btn btn-primary my-2 my-sm-0" style="display: none;" type="submit">Iniciar
-        sesión</button>
       <button id="js-cerrar-wrapper" class="btn btn-secondary my-2 my-sm-0" style="display: none;"
         onClick="CerrarSesion()">Cerrar sesión</button>
     </form>
@@ -48,8 +45,8 @@
       <h5 class="card-header">Informe Global Covid</h5>
       <div class="card-body">
         <h5 class="card-title">--- Log in Required ---</h5>
-        <p class="card-text">Esta información es superconfidencial y esta solo permitida para los reyes del mundo</p>
-        <p class="card-text">Comprueba que eres de la realeza logueando con tu cuenta y clave unicas</p>
+        <p class="card-text">Porfavor ingresa tu usuario y contraseña</p>
+        <p class="card-text"></p>
         <form>
           <div class="form-group">
             <label for="email1">Ingresar correo</label>
@@ -67,18 +64,18 @@
           data-target="#usuariorey">¿Olvidaste tu cuenta?</button>
 
         <!-- Modal -->
-        <div class="modal fade" id="usuariorey" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="usuariorey" tabindex="-1" aria-labelledby="ModalForm" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">No se preocupe mi rey</h5>
+                <h5 class="modal-title" id="ModalForm">No te preocupes</h5>
               </div>
               <div class="modal-body">
-                yo le lleno los datos, no hay problema
+                Usa este log in, buena suerte.
               </div>
               <div class="modal-footer">
                 <button id="llenardatosForm" type="button" class="btn btn-secondary" data-dismiss="modal">Llenar
-                  Formulario con amor</button>
+                  Formulario</button>
               </div>
             </div>
           </div>
@@ -91,15 +88,27 @@
   <div id="table-card-wrapper" class="card border-0 text-center w-auto p-3" style="width: 18rem; display: none;"
    >
     <div class="card-body">
+
       <div>
         <canvas id="tablapro"></canvas>
       </div>
+
       <p class="card-text">Si necesitas más informacion por país, presiona ver más.</p>
-      <button id="vermas" type="button" class="btn btn-danger mb-2 text-light">Ver más</button>
-      <div id="vermasrequest">
-      </div>
-      <div><button id="previo" type="button" class="btn btn-link">Anterior</button> <span><button id="siguiente"
-            type="button" class="btn btn-link">Siguiente</button></span></div>
+      <ul id="vermasrequest" class="list-group text-center px-5">
+      </ul>
+
+      <ul class="list-group list-group-horizontal-sm border-0 pl-5">
+        <li class="list-group-item border-0"><button id="previo" type="button" class="btn btn-link">Anterior</button></li>
+        <li class="list-group-item border-0 pl-5"><p id="paginaactual" class="font-weight-lighter pt-2"></p></li>
+        <li class="list-group-item border-0 pl-5"><button id="siguiente" type="button" class="btn btn-link">Siguiente</button></li>
+      </ul>
+
+      <!-- <div><button id="previo" type="button" class="btn btn-link">Anterior</button> 
+        <span><p id="paginaactual" type="button" class="text-center">Pagina Actual</p>
+          <span><button id="siguiente" type="button" class="btn btn-link">Siguiente</button></span>
+        </span>
+        
+      </div> -->
 
     </div>
   </div>

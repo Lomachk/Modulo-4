@@ -1,32 +1,16 @@
 import { postData } from '../AuthProcess.js';
 import { getInfoTabla, getInfoPais } from '../InfoRetrival.js';
 
-// let JWT = inicioSesion();    //despues hay que sacarlo del local storage, iniciosesion es por ahroa noams
-
-// let estadisticas = getInfoTabla(JWT);
-
 //Este js trabaja los datos autorizados para que sean leidos de forma óptima para crear las tablas
-//casos activos es 12% del total de casos confirmados para este ejercicio
-//casos recuperados es 50% del total de casos confirmados para este ejercicio
+
+// calculo oficial
+// Calculo será    [casos_confirmados - muertes]  * 0.6  para los recuperados  y    
+//                 [casos_confirmados - muertes]  * 0.4  para los activos
 
 
-// psos
-// crear variabel de objeto vacía donde llegará el array de 10 weas que puede leer bien una gráfica
-// comprobar que hayan sobre 10000 casos (if)
-// guardar en una variable "y" el unmero y en "label" el pais
-// devolver la variable lista para q lea la wea
-// seleccionar 10 casos en orden (necesitamos una variable i global)
-// dar vuelta el orden porque la tabla es mas webiaa q la cocnheuasubashdbjagajfga
-// devolver el array listo para cada caso
+let crearDataset = async (estadisticas, indexGlobal, requesto) => {
 
-//son 4 casos, se puede simplificar?????
-
-// devolver objeto con esto q se llame dataset
-
-
-let crearDataset = async (stats, indexGlobal, requesto) => {
-
-    let dataset = [];
+    let dataset = []; 
     let setpaises = [];
     let setconfirmados = [];
     let setmuertos = [];
@@ -34,17 +18,17 @@ let crearDataset = async (stats, indexGlobal, requesto) => {
     let setrecuperados = [];
 
 
-    stats.forEach(element => {
+    estadisticas.forEach(element => {
 
-        let casosactivos = element.confirmed * 0.12;
+        let casosactivos = (element.confirmed - element.deaths) * 0.4;
 
         if (casosactivos >= 10000) {
 
             setpaises.push(element.location);
             setconfirmados.push(element.confirmed);
             setmuertos.push(element.deaths);
-            setactivos.push(element.confirmed * 0.12);
-            setrecuperados.push(element.confirmed * 0.5);
+            setactivos.push((element.confirmed - element.deaths) * 0.4);
+            setrecuperados.push((element.confirmed - element.deaths) * 0.6);
 
         };
 
@@ -99,13 +83,13 @@ let crearDataset = async (stats, indexGlobal, requesto) => {
 let selecc10 = (arri, indexGlobal) => {
     let corteDe10 = [];
     for (let i = 0; i < 10; i++) {
-        corteDe10.push(arri[i + indexGlobal]);
+        corteDe10.push(arri[i + indexGlobal]);                                                                                                                                // código por ClxZero, saludos!!! --> clarx@live.cl
     };
     return corteDe10
 };
 
 
-let paisesMod = async (stats, indexGlobal) => {
+let paisesMod = async (estadisticas, indexGlobal) => {
 
     let setpaises = [];
     let setconfirmados = [];
@@ -113,17 +97,17 @@ let paisesMod = async (stats, indexGlobal) => {
     let setactivos = [];
     let setrecuperados = [];
 
-    stats.forEach(element => {
+    estadisticas.forEach(element => {
 
-        let casosactivos = element.confirmed * 0.12;
+        let casosactivos = (element.confirmed - element.deaths) * 0.4;
 
         if (casosactivos >= 10000) {
 
             setpaises.push(element.location);
             setconfirmados.push(element.confirmed);
             setmuertos.push(element.deaths);
-            setactivos.push((element.confirmed * 0.12).toFixed(0));
-            setrecuperados.push((element.confirmed * 0.5).toFixed(0));
+            setactivos.push(((element.confirmed - element.deaths) * 0.4).toFixed(0));
+            setrecuperados.push(((element.confirmed - element.deaths) * 0.6).toFixed(0));
 
         };
 
@@ -140,5 +124,3 @@ let paisesMod = async (stats, indexGlobal) => {
 }
 
 export { crearDataset, paisesMod, selecc10 }
-
-//mostrar el largo camino del index globlal podria ser entretenido

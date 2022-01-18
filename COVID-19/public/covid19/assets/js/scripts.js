@@ -2,9 +2,10 @@ import { postData } from './AuthProcess.js';
 import { getInfoTabla, getInfoPais } from './InfoRetrival.js';
 import nuevaChart from './Tabla/Tabla.js';
 import { crearDataset, paisesMod, selecc10 } from "./Tabla/InputsTablas.js";
-import botonVerMas from './vermas.js';
+import SeccionVerMas from './vermas.js';
 import { completarAlRey } from './InicioSesion.js';
 import { switchBotonSesion, togglePresentacion, toggleTableCard } from "./Tugliglugli.js";
+import paginaActual from './PaginaActual.js';
 
 
 window.CerrarSesion = () => {
@@ -19,7 +20,7 @@ window.onload = () => {
 
     let indexGlobal = 0;
 
-     
+
     // checkeo inicial
 
     const init = async () => {
@@ -30,17 +31,19 @@ window.onload = () => {
 
             const estadisticas = await getInfoTabla(token);
             console.log(estadisticas);
-            console.log("info pais")
-            let inpai = await getInfoPais(token, "Argentina");
-            console.log(inpai)
 
             nuevaChart(estadisticas, indexGlobal);
+
 
             toggleTableCard();
             switchBotonSesion();
             togglePresentacion();
 
-            document.getElementById("vermasrequest").innerHTML = "";
+            document.getElementById("paginaactual").innerHTML = `Página ${paginaActual(indexGlobal)}`
+
+            document.getElementById("vermasrequest").innerHTML = "";  //tiene que limpiare para hacer una nueva con la funcion
+
+            SeccionVerMas(estadisticas, indexGlobal);
 
             return estadisticas
         }
@@ -49,66 +52,68 @@ window.onload = () => {
     init();
 
 
-    //Botones
+    //iniciar sesion, anterior, siguiente
 
-    //vermas
+    document.getElementById("btnInicioSesion").addEventListener("click", async () => {
 
-    document.getElementById("vermas").addEventListener("click", async () => {
+        let mail = document.getElementById("email1").value;
+        let pass = document.getElementById("password1").value;
 
-        event.preventDefault();
+        const token = await postData(mail, pass);
 
-        let estadisticas = await getInfoTabla(localStorage.getItem('jwt-token'))
+        let estadisticas = await getInfoTabla(token); //estadisticas son los datos de la api
 
-        botonVerMas(estadisticas, indexGlobal);
-
-    });
-
-
-    //iniciar sesion  -> recive los permisos, crea una tabla, agrega botones de pagina  modulares de mas info
-    document.getElementById("js-iniciar-wrapper").addEventListener("click", async () => {
-
-        event.preventDefault();
-
-        let JWT = inicioSesion();
-
-        let estadisticas = await getInfoTabla(JWT);
+        switchBotonSesion();
+        toggleTableCard();
+        togglePresentacion();
 
         nuevaChart(estadisticas, indexGlobal);
 
-        indexGlobal += 10;
-        
-        document.getElementById("vermasrequest").innerHTML = "";
+        document.getElementById("paginaactual").innerHTML = `Página ${paginaActual(indexGlobal)}`
 
-        switchBotonSesion();
+        document.getElementById("vermasrequest").innerHTML = "";  //tiene que limpiare para hacer una nueva con la funcion
+        SeccionVerMas(estadisticas, indexGlobal);
+
+
 
     });
+
 
     document.getElementById("previo").addEventListener("click", async () => {
 
         event.preventDefault();
-        
+
         indexGlobal -= 10;
 
-        let estadisticas = await getInfoTabla(localStorage.getItem('jwt-token'))
-
-        let chartStatus = Chart.getChart("tablapro");
-        if (chartStatus != undefined) {
-            chartStatus.destroy();
+        if (indexGlobal < 0) {
+            indexGlobal = 0;
         }
 
-        nuevaChart(estadisticas, indexGlobal);
+        else {
 
+            let estadisticas = await getInfoTabla(localStorage.getItem('jwt-token'))
 
-        document.getElementById("vermasrequest").innerHTML = "";
+            let chartStatus = Chart.getChart("tablapro");
+            if (chartStatus != undefined) {
+                chartStatus.destroy();
+            }
 
-        if (indexGlobal < 0) { indexGlobal = 0 }
+            nuevaChart(estadisticas, indexGlobal);
+
+            document.getElementById("paginaactual").innerHTML = `Página ${paginaActual(indexGlobal)}`
+
+            document.getElementById("vermasrequest").innerHTML = "";  //tiene que limpiare para hacer una nueva con la funcion
+
+            SeccionVerMas(estadisticas, indexGlobal);
+
+        };
 
     });
 
     document.getElementById("siguiente").addEventListener("click", async () => {
 
         event.preventDefault();
-        
+
         indexGlobal += 10;
 
         let estadisticas = await getInfoTabla(localStorage.getItem('jwt-token'));
@@ -119,52 +124,22 @@ window.onload = () => {
         }
 
         nuevaChart(estadisticas, indexGlobal);
-        
-        document.getElementById("vermasrequest").innerHTML = "";
+
+        document.getElementById("paginaactual").innerHTML = `Página ${paginaActual(indexGlobal)}`
+
+        document.getElementById("vermasrequest").innerHTML = "";  //tiene que limpiare para hacer una nueva con la funcion
+        SeccionVerMas(estadisticas, indexGlobal);
 
     });
+
+
+    //otros
 
     document.getElementById("llenardatosForm").addEventListener("click", () => {
 
-    completarAlRey();
+        completarAlRey();
 
     });
-
-    document.getElementById("btnInicioSesion").addEventListener("click", async () => {
-    
-        let mail = document.getElementById("email1").value;
-        let pass = document.getElementById("password1").value;
-
-        const token = await postData(mail, pass);
-
-        let estadisticas = await getInfoTabla(token);
-
-        switchBotonSesion();
-        toggleTableCard();
-        togglePresentacion();
-        
-        document.getElementById("vermasrequest").innerHTML = "";
-
-        nuevaChart(estadisticas, indexGlobal);
-
-        
-
-    });
-
 };
 
-//->esta informacion es muy importante, reservada solo para los reyes del mundo, ingresa con tu usuario para comprobar que eres de la realiza
-//no te acuerdas tu usuario? tranketa, yo lo relleno por tí mi rey
-//se le puede agregar un numero random a los creadores de los datos faltantes para q se vea mas real
-// crear funciones para
-// generar generar tabla
-// popup de mas informacion
-// modal con la info personalizada
-// cerrar sesion
-// iniciar sesion -> link con postdata en Submit
-
-//agregar a la tabla ina id por cada pais con el nombre de caa pais
-
-//variables necesarias
-//una que identifique a los paises
 

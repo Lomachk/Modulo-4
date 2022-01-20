@@ -2,7 +2,7 @@ import { postData } from './AuthProcess.js';
 import { getInfoTabla, getInfoPais } from './InfoRetrival.js';
 import nuevaChart from './Tabla/Tabla.js';
 import { crearDataset, paisesMod, selecc10 } from "./Tabla/InputsTablas.js";
-import botonVerMas from './vermas.js';
+import { SeccionVerMas } from './VerMas/vermas.js';
 
 
 

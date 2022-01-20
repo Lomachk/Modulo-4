@@ -2,10 +2,12 @@ import { postData } from './AuthProcess.js';
 import { getInfoTabla, getInfoPais } from './InfoRetrival.js';
 import nuevaChart from './Tabla/Tabla.js';
 import { crearDataset, paisesMod, selecc10 } from "./Tabla/InputsTablas.js";
-import SeccionVerMas from './vermas.js';
+import { SeccionVerMas } from './VerMas/vermas.js';
 import { completarAlRey } from './InicioSesion.js';
-import { switchBotonSesion, togglePresentacion, toggleTableCard } from "./Tugliglugli.js";
+import { switchBotonSesion, togglePresentacion, toggleTableCard, switchBtnVerTodo } from "./Tugliglugli.js";
 import paginaActual from './PaginaActual.js';
+import chartmodData from './VerMas/chartmod.js';
+import { verTODO, verPagina } from './VerMas/VerTODO.js';
 
 
 window.CerrarSesion = () => {
@@ -13,15 +15,21 @@ window.CerrarSesion = () => {
     location.reload();
 };
 
+window.destroyChart = () => {
+    let chartStatus = Chart.getChart("ChartModalGen");
+    chartStatus.destroy();
+};
+
+// Onload !
 
 window.onload = () => {
 
-
-
     let indexGlobal = 0;
-
+    let tablapaises = document.getElementById("vermasrequest");
+    let avisoCarga = document.getElementById("avisoCarga");
 
     // checkeo inicial
+
 
     const init = async () => {
 
@@ -41,7 +49,7 @@ window.onload = () => {
 
             document.getElementById("paginaactual").innerHTML = `Página ${paginaActual(indexGlobal)}`
 
-            document.getElementById("vermasrequest").innerHTML = "";  //tiene que limpiare para hacer una nueva con la funcion
+            avisoCarga.innerHTML = `Cargando Tabla con Información...`;
 
             SeccionVerMas(estadisticas, indexGlobal);
 
@@ -69,9 +77,11 @@ window.onload = () => {
 
         nuevaChart(estadisticas, indexGlobal);
 
+        avisoCarga.innerHTML = `Cargando Tabla con Información...`;
+
         document.getElementById("paginaactual").innerHTML = `Página ${paginaActual(indexGlobal)}`
 
-        document.getElementById("vermasrequest").innerHTML = "";  //tiene que limpiare para hacer una nueva con la funcion
+        tablapaises.innerHTML = `<p class="text-center font-weight-lighter text-muted">Cargando Tabla con Información...</p>`;
         SeccionVerMas(estadisticas, indexGlobal);
 
 
@@ -99,11 +109,14 @@ window.onload = () => {
             }
 
             nuevaChart(estadisticas, indexGlobal);
+            
+            document.getElementById("BtnVerPagina").innerHTML = `Ver Página ${paginaActual(indexGlobal)}`;
+
+            avisoCarga.innerHTML = `Cargando Tabla con Información...`;
 
             document.getElementById("paginaactual").innerHTML = `Página ${paginaActual(indexGlobal)}`
 
-            document.getElementById("vermasrequest").innerHTML = "";  //tiene que limpiare para hacer una nueva con la funcion
-
+            tablapaises.innerHTML = `<p class="text-center font-weight-lighter text-muted">Cargando Tabla con Información...</p>`;
             SeccionVerMas(estadisticas, indexGlobal);
 
         };
@@ -124,22 +137,64 @@ window.onload = () => {
         }
 
         nuevaChart(estadisticas, indexGlobal);
+        
+        document.getElementById("BtnVerPagina").innerHTML = `Ver Página ${paginaActual(indexGlobal)}`;
+
+        avisoCarga.innerHTML = `Cargando Tabla con Información...`;
 
         document.getElementById("paginaactual").innerHTML = `Página ${paginaActual(indexGlobal)}`
 
-        document.getElementById("vermasrequest").innerHTML = "";  //tiene que limpiare para hacer una nueva con la funcion
+        tablapaises.innerHTML = `<p class="text-center font-weight-lighter text-muted">Cargando Tabla con Información...</p>`;
         SeccionVerMas(estadisticas, indexGlobal);
 
     });
 
 
-    //otros
+    //otros 
+
 
     document.getElementById("llenardatosForm").addEventListener("click", () => {
 
         completarAlRey();
 
     });
+
+    document.getElementById("BtnVerTodo").addEventListener("click", async () => {
+
+        event.preventDefault();
+
+        switchBtnVerTodo();
+        
+        document.getElementById("BtnVerPagina").innerHTML = `Ver Página ${paginaActual(indexGlobal)}`;
+
+        avisoCarga.innerHTML = `Cargando Tabla con Información...`;
+
+        let estadisticas = await getInfoTabla(localStorage.getItem('jwt-token'));
+
+        tablapaises.innerHTML = `<p class="text-center font-weight-lighter text-muted">Cargando Tabla con TODA la Información...</p>`;
+
+        verTODO(estadisticas);
+
+    });
+
+    document.getElementById("BtnVerPagina").addEventListener("click", async () => {
+
+        event.preventDefault();
+
+        avisoCarga.innerHTML = `Cargando Tabla con Información...`;
+
+        switchBtnVerTodo();
+
+        let estadisticas = await getInfoTabla(localStorage.getItem('jwt-token'));
+
+        tablapaises.innerHTML = `<p class="text-center font-weight-lighter text-muted">Cargando Tabla con Información de esta página...</p>`;
+
+        verPagina(estadisticas, indexGlobal);
+
+    });
+
+
+
 };
 
 

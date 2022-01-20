@@ -11,5 +11,11 @@ const togglePresentacion = () => {
     $("#cartaPresentacion-wrapper").toggle();
 };
 
+const switchBtnVerTodo = () => {
+    $("#BtnVerTodo").toggle();
+    $("#BtnVerPagina").toggle();
+};
 
-export { switchBotonSesion, togglePresentacion, toggleTableCard }
+
+
+export { switchBotonSesion, togglePresentacion, toggleTableCard, switchBtnVerTodo }

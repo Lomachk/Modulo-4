@@ -21,17 +21,6 @@ const postData = async (email, password) => {
 };
 
 
-// const inicioSesion = async () => {  //dsps aqui agregar email y pass como variables recibibles desde el submit
-
-//     let email = "Shanna@melissa.tv"  //despues en un modal del boton iniciar sesion, transformar toda esta funcion
-//     let pass = "secret"
-
-//     let JWT = await postData(email, pass);
-
-//     return JWT
-
-// }
-
 export { postData }
 
 

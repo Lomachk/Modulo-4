@@ -4,8 +4,8 @@ import { getInfoTabla, getInfoPais } from '../InfoRetrival.js';
 //Este js trabaja los datos autorizados para que sean leidos de forma óptima para crear las tablas
 
 // calculo oficial
-// Calculo será    [casos_confirmados - muertes]  * 0.6  para los recuperados  y    
-//                 [casos_confirmados - muertes]  * 0.4  para los activos
+// Calculo será    recuperados: [casos_confirmados - muertes]  * 0.6    
+//                  activos:    [casos_confirmados - muertes]  * 0.4  
 
 
 let crearDataset = async (estadisticas, indexGlobal, requesto) => {
@@ -121,6 +121,27 @@ let paisesMod = async (estadisticas, indexGlobal) => {
 
     return {seleccionPais, seleccionConfirmados, seleccionMuertos, seleccionActivos, seleccionRecuperados}
 
-}
+};
 
-export { crearDataset, paisesMod, selecc10 }
+
+let paises10milmasTODOS = (estadisticas) => {
+
+    let setpaises = [];
+
+    estadisticas.forEach(element => {
+
+        setpaises.push(element.location);
+
+        // let casosactivos = (element.confirmed - element.deaths) * 0.4;
+        // if (casosactivos >= 10000) {
+        //     setpaises.push(element.location);
+        // };
+
+    });
+
+   
+    return { setpaises }
+
+};
+
+export { crearDataset, paisesMod, selecc10, paises10milmasTODOS }

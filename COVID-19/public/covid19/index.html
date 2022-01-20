@@ -93,24 +93,67 @@
         <canvas id="tablapro"></canvas>
       </div>
 
-      <p class="card-text">Si necesitas más informacion por país, presiona ver más.</p>
-      <ul id="vermasrequest" class="list-group text-center px-5">
-      </ul>
-
-      <ul class="list-group list-group-horizontal-sm border-0 pl-5">
-        <li class="list-group-item border-0"><button id="previo" type="button" class="btn btn-link">Anterior</button></li>
+      <ul class="list-group list-group-horizontal-sm border-0 m-auto pl-5">
+        <li class="list-group-item border-0 pl-5"><button id="previo" type="button" class="btn btn-link">Anterior</button></li>
         <li class="list-group-item border-0 pl-5"><p id="paginaactual" class="font-weight-lighter pt-2"></p></li>
         <li class="list-group-item border-0 pl-5"><button id="siguiente" type="button" class="btn btn-link">Siguiente</button></li>
       </ul>
 
-      <!-- <div><button id="previo" type="button" class="btn btn-link">Anterior</button> 
-        <span><p id="paginaactual" type="button" class="text-center">Pagina Actual</p>
-          <span><button id="siguiente" type="button" class="btn btn-link">Siguiente</button></span>
-        </span>
-        
-      </div> -->
-
+      <p class="card-text">Si necesitas más informacion por país, presiona ver más.</p>
+      <p id="avisoCarga" class="text-center font-weight-lighter">Cargando Tabla con Información...</p>
+      <div id="vermasrequest" class="m-auto text-center">
+      </div>   
     </div>
+    <div id="vertodo" class="m-auto text-center pb-4">  
+      <button id="BtnVerTodo" class="btn btn-dark m-auto text-center" style="display: block;">Ver Todo</button>
+      <button id="BtnVerPagina" class="btn btn-dark m-auto text-center" style="display: none;">Ver Todo</button>
+      </div>
+  </div>
+
+ 
+  <!-- Modal del pais - ver más -->
+
+  <div class="modal fade" id="ModalVerMas" tabindex="-1" data-backdrop="static" aria-labelledby="ElmodalQueEsAmigoDeTodos" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+              <h5 class="modal-title" id="VerMasNombrePais">Nomre pais</h5>
+              <button type="button" class="close" onclick="destroyChart()" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+       </div>
+        <div class="modal-body">
+        <div class="text-center">
+        <table class="table pl-5 border-0">
+         <tbody>
+            <tr>
+              <th scope="row" class="float-left border-0">Activos</th>
+              <td class="float-right border-0" id="VerMasModactivos">${activos}</td>
+            </tr>
+            <tr>
+              <th scope="row" class="float-left border-0">Recuperados</th>
+              <td class="float-right border-0" id="VerMasModrecuperados">${recuperados}</td>
+            </tr>
+            <tr>
+              <th scope="row" class="float-left border-0">Confirmados</th>
+             <td class="float-right border-0" id="VerMasModconfirmados">${confirmados}</td>
+           </tr>
+            <tr>
+              <th scope="row" class="float-left border-0">Muertes</th>
+              <td class="float-right border-0" id="VerMasModmuertes">${muertes}</td>
+            </tr>
+         </tbody>
+       </table>
+       </div>
+             <div>
+               <canvas id="ChartModalGen"></canvas>
+             </div>
+       </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="destroyChart()">Close</button>
+        </div>
+      </div>
+      </div>
   </div>
 
 

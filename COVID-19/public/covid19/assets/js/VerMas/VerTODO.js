@@ -43,7 +43,7 @@ let crearListaVerTODO = async (setpaises) => {  //sacamos el nombre del pais que
 
       let paisfix = correcionEpaciosPais(nombrepais);
 
-      let datosAPIpaises = await getInfoPais(jwt, paisfix); //recivo info de un pais en especifico y luego lo envia a la función del mod
+      let datosAPIpaises = await getInfoPais(jwt, paisfix); //recibo info de un pais en especifico y luego lo envia a la función del mod                                                    // by ClxZero  
 
       let pais = datosAPIpaises.location;
       let activos = ((datosAPIpaises.confirmed - datosAPIpaises.deaths) * 0.4).toFixed(0);

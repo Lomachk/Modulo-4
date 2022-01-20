@@ -99,7 +99,7 @@ window.onload = () => {
 
         else {
 
-            let estadisticas = await getInfoTabla(localStorage.getItem('jwt-token'))
+            let estadisticas = await getInfoTabla(localStorage.getItem('jwt-token'))                                                                                                                                        //by ClxZero  clarx@live.cl
 
             let chartStatus = Chart.getChart("tablapro");
             if (chartStatus != undefined) {

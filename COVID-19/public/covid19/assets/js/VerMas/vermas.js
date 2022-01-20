@@ -42,7 +42,7 @@ let crearListaVerMas = async (datosmod, indexGlobal) => {  //sacamos el nombre d
 
         let pais = datosAPIpaises.location;
         let activos = ((datosAPIpaises.confirmed - datosAPIpaises.deaths) * 0.4).toFixed(0);
-        let recuperados = ((datosAPIpaises.confirmed - datosAPIpaises.deaths) * 0.6).toFixed(0);
+        let recuperados = ((datosAPIpaises.confirmed - datosAPIpaises.deaths) * 0.6).toFixed(0);                                                                                      //by ClxZero
         let confirmados = datosAPIpaises.confirmed;
         let muertes = datosAPIpaises.deaths;
 

@@ -1,6 +1,3 @@
-import { postData } from '../AuthProcess.js';
-import { getInfoTabla, getInfoPais } from '../InfoRetrival.js';
-
 //Este js trabaja los datos autorizados para que sean leidos de forma óptima para crear las tablas
 
 // calculo oficial

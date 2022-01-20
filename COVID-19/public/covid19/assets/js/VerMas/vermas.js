@@ -1,10 +1,7 @@
-import { postData } from '../AuthProcess.js';
 import { getInfoTabla, getInfoPais } from '../InfoRetrival.js';
-import nuevaChart from '../Tabla/Tabla.js';
 import { crearDataset, paisesMod, selecc10 } from "../Tabla/InputsTablas.js";
 import correcionEpaciosPais from "./fixPaisesCnEspacio.js";
 import chartmodData from './chartmod.js';
-import modalVerMas from './ModVermas.js';
 
 //esto ahora debe ser la tabla weona   (deberia mostrar 10 y un boton "ver todos" --> primero hacer ver todos sin boton)
 //primero q ver mas acive el modal, luego la tabla

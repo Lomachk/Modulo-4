@@ -1,10 +1,7 @@
-import { postData } from '../AuthProcess.js';
 import { getInfoTabla, getInfoPais } from '../InfoRetrival.js';
-import nuevaChart from '../Tabla/Tabla.js';
 import { crearDataset, paisesMod, selecc10, paises10milmasTODOS } from "../Tabla/InputsTablas.js";
 import correcionEpaciosPais from "./fixPaisesCnEspacio.js";
 import chartmodData from './chartmod.js';
-import modalVerMas from './ModVermas.js';
 import { crearListaVerMas } from './vermas.js';
 
 

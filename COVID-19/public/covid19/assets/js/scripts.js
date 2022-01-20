@@ -1,12 +1,10 @@
 import { postData } from './AuthProcess.js';
 import { getInfoTabla, getInfoPais } from './InfoRetrival.js';
 import nuevaChart from './Tabla/Tabla.js';
-import { crearDataset, paisesMod, selecc10 } from "./Tabla/InputsTablas.js";
 import { SeccionVerMas } from './VerMas/vermas.js';
 import { completarAlRey } from './InicioSesion.js';
 import { switchBotonSesion, togglePresentacion, toggleTableCard, switchBtnVerTodo } from "./Tugliglugli.js";
 import paginaActual from './PaginaActual.js';
-import chartmodData from './VerMas/chartmod.js';
 import { verTODO, verPagina } from './VerMas/VerTODO.js';
 
 
